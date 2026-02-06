@@ -1077,3 +1077,52 @@ flight planner
 
 </body>
 </html>
+{
+“name”: “SEMAR Flight Planner”,
+“short_name”: “SEMAR FP”,
+“description”: “Sistema de Planificación de Vuelo para la Secretaría de Marina - Armada de México”,
+“start_url”: “/”,
+“display”: “standalone”,
+“background_color”: “#0f172a”,
+“theme_color”: “#3b82f6”,
+“orientation”: “any”,
+“icons”: [
+{
+“src”: “data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ viewBox=‘0 0 100 100’%3E%3Crect fill=’%233b82f6’ width=‘100’ height=‘100’/%3E%3Ctext x=‘50’ y=‘65’ font-size=‘60’ text-anchor=‘middle’ fill=‘white’%3E⚓%3C/text%3E%3C/svg%3E”,
+“sizes”: “192x192”,
+“type”: “image/svg+xml”,
+“purpose”: “any maskable”
+},
+{
+“src”: “data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ viewBox=‘0 0 100 100’%3E%3Crect fill=’%233b82f6’ width=‘100’ height=‘100’/%3E%3Ctext x=‘50’ y=‘65’ font-size=‘60’ text-anchor=‘middle’ fill=‘white’%3E⚓%3C/text%3E%3C/svg%3E”,
+“sizes”: “512x512”,
+“type”: “image/svg+xml”,
+“purpose”: “any maskable”
+}
+],
+“shortcuts”: [
+{
+“name”: “Nuevo Plan de Vuelo”,
+“short_name”: “Nuevo”,
+“description”: “Crear un nuevo plan de vuelo”,
+“url”: “/?action=new”,
+“icons”: [{ “src”: “data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ viewBox=‘0 0 100 100’%3E%3Ctext x=‘50’ y=‘65’ font-size=‘60’ text-anchor=‘middle’%3E✈️%3C/text%3E%3C/svg%3E”, “sizes”: “96x96” }]
+},
+{
+“name”: “Dashboard”,
+“short_name”: “Dashboard”,
+“description”: “Ver estadísticas de vuelos”,
+“url”: “/?view=dashboard”,
+“icons”: [{ “src”: “data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ viewBox=‘0 0 100 100’%3E%3Ctext x=‘50’ y=‘65’ font-size=‘60’ text-anchor=‘middle’%3E📊%3C/text%3E%3C/svg%3E”, “sizes”: “96x96” }]
+}
+],
+“categories”: [“navigation”, “utilities”, “productivity”],
+“screenshots”: [
+{
+“src”: “data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ viewBox=‘0 0 1200 800’%3E%3Crect fill=’%230f172a’ width=‘1200’ height=‘800’/%3E%3Ctext x=‘600’ y=‘400’ font-size=‘80’ text-anchor=‘middle’ fill=’%233b82f6’%3ESEMAR Flight Planner%3C/text%3E%3C/svg%3E”,
+“sizes”: “1200x800”,
+“type”: “image/svg+xml”,
+“form_factor”: “wide”
+}
+]
+}
