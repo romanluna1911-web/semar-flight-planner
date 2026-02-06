@@ -1126,3 +1126,98 @@ flight planner
 }
 ]
 }
+// service-worker.js - Service Worker para modo offline
+const CACHE_NAME = ‘semar-flight-planner-v1.0’;
+const URLS_TO_CACHE = [
+‘/’,
+‘/index.html’,
+‘/manifest.json’
+];
+
+// Instalación del Service Worker
+self.addEventListener(‘install’, (event) => {
+event.waitUntil(
+caches.open(CACHE_NAME)
+.then((cache) => {
+console.log(‘Cache abierto’);
+return cache.addAll(URLS_TO_CACHE);
+})
+);
+self.skipWaiting();
+});
+
+// Activación del Service Worker
+self.addEventListener(‘activate’, (event) => {
+event.waitUntil(
+caches.keys().then((cacheNames) => {
+return Promise.all(
+cacheNames.map((cacheName) => {
+if (cacheName !== CACHE_NAME) {
+console.log(‘Eliminando cache antigua:’, cacheName);
+return caches.delete(cacheName);
+}
+})
+);
+})
+);
+self.clients.claim();
+});
+
+// Estrategia: Network First, fallback to Cache
+self.addEventListener(‘fetch’, (event) => {
+// Solo cachear requests GET
+if (event.request.method !== ‘GET’) return;
+
+// Estrategia especial para APIs meteorológicas
+if (event.request.url.includes(‘aviationweather.gov’) ||
+event.request.url.includes(‘checkwxapi.com’)) {
+event.respondWith(
+fetch(event.request)
+.then((response) => {
+// Clonar respuesta para cachear
+const responseToCache = response.clone();
+caches.open(CACHE_NAME).then((cache) => {
+cache.put(event.request, responseToCache);
+});
+return response;
+})
+.catch(() => {
+// Si falla la red, usar cache
+return caches.match(event.request);
+})
+);
+} else {
+// Para otros recursos: Cache First
+event.respondWith(
+caches.match(event.request)
+.then((response) => {
+if (response) {
+return response;
+}
+return fetch(event.request).then((response) => {
+// Cachear respuesta si es válida
+if (!response || response.status !== 200 || response.type === ‘error’) {
+return response;
+}
+const responseToCache = response.clone();
+caches.open(CACHE_NAME).then((cache) => {
+cache.put(event.request, responseToCache);
+});
+return response;
+});
+})
+);
+}
+});
+
+// Sincronización en background
+self.addEventListener(‘sync’, (event) => {
+if (event.tag === ‘sync-flight-data’) {
+event.waitUntil(syncFlightData());
+}
+});
+
+async function syncFlightData() {
+// Aquí puedes sincronizar datos con el servidor cuando hay conexión
+console.log(‘Sincronizando datos de vuelo…’);
+}
